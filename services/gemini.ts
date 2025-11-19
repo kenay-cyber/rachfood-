@@ -1,6 +1,16 @@
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
-const API_KEY = process.env.API_KEY || '';
+// Safely access process.env for browser environments
+const getApiKey = () => {
+  try {
+    // @ts-ignore
+    return (typeof process !== 'undefined' && process.env && process.env.API_KEY) || '';
+  } catch (e) {
+    return '';
+  }
+};
+
+const API_KEY = getApiKey();
 
 let aiClient: GoogleGenAI | null = null;
 
